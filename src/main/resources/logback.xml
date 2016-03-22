@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+
+    <!--  ===================================== Properties ========================================================= -->
+
+    <property name="logs.base.dir" value="${catalina.home}/logs/cdi" />
+    <property name="LOG_DIR" value="${logs.base.dir}" />
+    <property name="LOG_ROLLOVER_DIR" value="${logs.base.dir}/logs.old" />
+
+    <property name="PATTERN_FORMAT" value="%-20(%d{HH:mm:ss.SSS} [%thread]) %-5level %40.40logger{40} - %msg%n" />
+    <property name="MAX_HISTORY" value="60" />
+    <property name="ROLLOVER_DATE_PATTERN" value="%d{yyyy-MM-dd}" />
+
+    <property name="GLOBAL_LOG_LEVEL" value="INFO" />
+    <property name="CONSOLE_LEVEL" value="INFO" />
+    <property name="PERSISTENCE_LOGGER_LEVEL" value="INFO" />
+    <property name="UI_LOGGER_LEVEL" value="INFO" />
+
+    <!--  ===================================== Common Appenders =================================================== -->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${CONSOLE_LEVEL}</level>
+        </filter>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${PATTERN_FORMAT}</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="Startup" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/startup.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROLLOVER_DIR}/startup.${ROLLOVER_DATE_PATTERN}.log</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${PATTERN_FORMAT}</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <level>ERROR</level>
+        <file>${LOG_DIR}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROLLOVER_DIR}/error.${ROLLOVER_DATE_PATTERN}.log</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <Pattern>${PATTERN_FORMAT}</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="Runtime" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/runtime.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROLLOVER_DIR}/runtime.${ROLLOVER_DATE_PATTERN}.log</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${PATTERN_FORMAT}</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="Persistence" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${PERSISTENCE_LOGGER_LEVEL}</level>
+        </filter>
+        <file>${LOG_DIR}/persistence.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROLLOVER_DIR}/persistence.${ROLLOVER_DATE_PATTERN}.log</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${PATTERN_FORMAT}</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="UI" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${UI_LOGGER_LEVEL}</level>
+        </filter>
+        <file>${LOG_DIR}/ui.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROLLOVER_DIR}/persistence.${ROLLOVER_DATE_PATTERN}.log</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${PATTERN_FORMAT}</Pattern>
+        </encoder>
+    </appender>
+
+    <!--  ================================ Frameworks/Components =================================================== -->
+
+    <logger name="org.hibernate" level="${PERSISTENCE_LOGGER_LEVEL}" additivity="false">
+        <appender-ref ref="Persistence" />
+        <appender-ref ref="Error" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <logger name="com.mchange" level="${PERSISTENCE_LOGGER_LEVEL}" additivity="false">
+        <appender-ref ref="Persistence" />
+        <appender-ref ref="Error" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <logger name="com.google.inject.internal.util" level="DEBUG" additivity="false">
+        <appender-ref ref="Error" />
+    </logger>
+
+    <logger name="com.google.code.vaadin" level="DEBUG" additivity="false">
+        <appender-ref ref="Error" />
+        <appender-ref ref="Runtime" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <!--  ===================================== Components ========================================================= -->
+
+    <logger name="com.google.code.vaadin" level="DEBUG">
+        <appender-ref ref="UI" />
+        <appender-ref ref="Runtime" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <!--  ===================================== Other ============================================================== -->
+
+    <root level="${GLOBAL_LOG_LEVEL}">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="Runtime" />
+    </root>
+</configuration>

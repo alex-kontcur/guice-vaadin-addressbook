@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.bona.guice</groupId>
+    <artifactId>guice-vaadin-addressbook</artifactId>
+    <packaging>war</packaging>
+    <version>1.0.0</version>
+
+    <name>Guice Vaadin Addressbook</name>
+    <description>Addressbook sample based on guice-vaadin-mvp, axon-guice and guice-repository</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Vaadin -->
+
+        <version.vaadin>7.0.2</version.vaadin>
+
+        <!-- MVP framework -->
+
+        <version.guice-vaadin-mvp>1.0.0</version.guice-vaadin-mvp>
+
+        <!-- CQRS support -->
+
+        <version.axon>2.0</version.axon>
+        <version.axon-guice>1.0.0</version.axon-guice>
+
+        <!-- Repository support -->
+
+        <version.guice-repository>2.0.2</version.guice-repository>
+
+        <!-- Validation support (JSR 303)-->
+
+        <version.validation-api>1.1.0.CR2</version.validation-api>
+        <version.hibernate-validator>5.0.0.CR2</version.hibernate-validator>
+
+        <!-- Security support -->
+
+        <version.shiro>1.2.1</version.shiro>
+
+        <!-- Logging -->
+
+        <version.logback>1.0.0</version.logback>
+
+        <!-- JPA implementation -->
+
+        <version.hibernate>4.1.10.Final</version.hibernate>
+
+        <!-- Internal DB -->
+
+        <version.h2>1.3.170</version.h2>
+
+        <!-- Servlet API -->
+
+        <version.servlet-api>2.5</version.servlet-api>
+
+        <!-- Plugins & Build dependencies -->
+
+        <gwt.plugin.version>2.2.0</gwt.plugin.version>
+        <gwt.version>2.3.0</gwt.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- Vaadin -->
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-server</artifactId>
+            <version>${version.vaadin}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiled</artifactId>
+            <version>${version.vaadin}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client</artifactId>
+            <version>${version.vaadin}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-themes</artifactId>
+            <version>${version.vaadin}</version>
+        </dependency>
+
+        <!-- MVP framework -->
+
+        <dependency>
+            <groupId>com.google.code.guice-vaadin-mvp</groupId>
+            <artifactId>guice-vaadin-mvp</artifactId>
+            <version>${version.guice-vaadin-mvp}</version>
+        </dependency>
+
+        <!-- CQRS support -->
+
+        <dependency>
+            <groupId>com.google.code.axon-guice</groupId>
+            <artifactId>axon-guice</artifactId>
+            <version>${version.axon-guice}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-core</artifactId>
+            <version>${version.axon}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-test</artifactId>
+            <version>${version.axon}</version>
+        </dependency>
+
+        <!-- Repository support -->
+
+        <dependency>
+            <groupId>com.google.code.guice-repository</groupId>
+            <artifactId>guice-repository</artifactId>
+            <version>${version.guice-repository}</version>
+        </dependency>
+
+        <!-- Validation support (JSR 303)-->
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${version.validation-api}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${version.hibernate-validator}</version>
+        </dependency>
+
+        <!-- Security support -->
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${version.shiro}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${version.shiro}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-guice</artifactId>
+            <version>${version.shiro}</version>
+        </dependency>
+
+        <!-- Logging -->
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${version.logback}</version>
+        </dependency>
+
+        <!-- JPA implementation -->
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${version.hibernate}</version>
+        </dependency>
+
+        <!-- Internal DB -->
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${version.h2}</version>
+        </dependency>
+
+        <!-- Servlet API -->
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${version.servlet-api}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/java/META-INF</directory>
+                <targetPath>META-INF</targetPath>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>${gwt.plugin.version}</version>
+                <configuration>
+                    <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets
+                    </webappDirectory>
+                    <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+                    <runTarget>cvgenerator-web</runTarget>
+                    <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+                    <noServer>true</noServer>
+                    <port>8080</port>
+                    <compileReport>false</compileReport>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>resources</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.google.gwt</groupId>
+                        <artifactId>gwt-dev</artifactId>
+                        <version>${gwt.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.google.gwt</groupId>
+                        <artifactId>gwt-user</artifactId>
+                        <version>${gwt.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-maven-plugin</artifactId>
+                <version>1.0.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>update-widgetset</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.10</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopKey>foo</stopKey>
+                    <stopPort>9999</stopPort>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>start-jetty</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <scanIntervalSeconds>0</scanIntervalSeconds>
+                            <daemon>true</daemon>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-jetty</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- extra repositories for Vaadin extensions -->
+
+    <repositories>
+        <repository>
+            <id>vaadin-snapshots</id>
+            <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+    </repositories>
+
+    <!-- repositories for the plugins -->
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>codehaus-snapshots</id>
+            <url>http://nexus.codehaus.org/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>vaadin-snapshots</id>
+            <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
